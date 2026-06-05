@@ -1,0 +1,8 @@
+{
+  "profile": "classroom",
+  "hq_version": "2.0",
+  "products_registered": 0,
+  "active_product_id": null,
+  "last_setup": "2026-06-05",
+  "notes": "product-registry.md에 프로덕트를 등록하고 active_product_id를 설정하세요"
+}

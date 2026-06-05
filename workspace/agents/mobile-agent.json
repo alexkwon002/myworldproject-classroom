@@ -1,0 +1,8 @@
+{
+  "name": "Mobile App Agent",
+  "version": "1.0-classroom",
+  "team": "it",
+  "keywords": ["[Flutter]", "[Mobile]"],
+  "resolve_from": "workspace/context/product-registry.md",
+  "project_role": "mobile-app"
+}

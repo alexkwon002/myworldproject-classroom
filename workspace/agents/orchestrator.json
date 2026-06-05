@@ -1,0 +1,8 @@
+{
+  "name": "Central Orchestrator",
+  "version": "1.0-classroom",
+  "role": "Multi-product AI orchestration across product, design, QA, IT, growth, operations, and corporate teams",
+  "context_root": "workspace/context",
+  "product_registry": "workspace/context/product-registry.md",
+  "notes": "Products and project paths are defined only in product-registry.md. Do not hardcode instructor projects."
+}

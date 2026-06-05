@@ -1,0 +1,8 @@
+{
+  "name": "Backend API Agent",
+  "version": "1.0-classroom",
+  "team": "it",
+  "keywords": ["[API]"],
+  "resolve_from": "workspace/context/product-registry.md",
+  "project_role": "backend-api"
+}

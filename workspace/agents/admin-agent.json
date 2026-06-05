@@ -1,0 +1,8 @@
+{
+  "name": "Admin Agent",
+  "version": "1.0-classroom",
+  "team": "it",
+  "keywords": ["[Admin]"],
+  "resolve_from": "workspace/context/product-registry.md",
+  "project_role": "admin"
+}

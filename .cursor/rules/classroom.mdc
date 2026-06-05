@@ -1,0 +1,57 @@
+---
+alwaysApply: true
+---
+
+# Classroom Mode — AI Agent Session Instructions
+
+**역할**: MyWorldProject HQ를 **AI 회사 운영 프레임워크**로 사용하는 학습자·운영자를 지원한다.
+**금지**: 강사 개인 프로덕트·계정·경로를 **추측하거나 기본값으로 가정하지 않는다.**
+
+---
+
+## SessionStart (매 채팅 시작 시 필수)
+
+1. **프로필 확인**: `workspace/.profile` 읽기 (`classroom` | `instructor`)
+2. **컨텍스트 루트 결정**:
+   - `classroom` → `workspace/context/`
+   - `instructor` → `workspace/local/context/` (존재 시, 없으면 `workspace/context/`)
+3. **Product Registry 필수 Read**: `{context_root}/product-registry.md` — 등록된 프로덕트·프로젝트·경로 파악
+4. **Active 작업 확인**: `{context_root}/workspace-todo.md` 의 `Active PDCA`·`Pending Tasks`만 Read
+5. **history 전체 Read 금지** — 필요 시 `Grep` 또는 `archive/` 부분 Read
+
+---
+
+## 프로덕트 N개 운영 규칙
+
+| 규칙 | 설명 |
+|---|---|
+| **SoT** | `product-registry.md`가 유일한 프로덕트·레포·경로 정의 |
+| **추가** | 사용자가 프로덕트 행 추가 → Agent가 워크스페이스·registry 동기화 안내 |
+| **경로** | `local_path`는 HQ 기준 **상대 경로**만 — clone 위치 자유(옵션 B), 절대경로 금지 |
+| **키워드** | `[API]` `[Admin]` `[Flutter]` `[Web]` 등 registry 표 기준 라우팅 |
+| **미등록** | registry에 없는 프로젝트 작업 시 → 먼저 registry 등록 제안 |
+
+---
+
+## 학생 온보딩 가이드 (Agent가 안내할 때)
+
+1. `npm run setup:classroom`
+2. `product-registry.md`에 본인 프로덕트 1개 이상 등록
+3. 프로덕트 레포 clone → `myworldproject.code-workspace.example` 참고해 멀티루트 구성
+4. Cursor에서 HQ + 프로덕트 폴더 열기
+5. Agent에게 예: `[프로덕트] 내 서비스 PRD 초안 작성해줘`
+
+---
+
+## Instructor 오버레이
+
+`workspace/.profile` = `instructor` 이거나 `.cursor/rules/instructor.local.mdc` 존재 시:
+- `company-rules.mdc` **일반 규칙** + `instructor.local.mdc` **개인 프로젝트 규칙** 동시 적용
+- history/todo/registry 경로는 `workspace/local/context/` 우선
+
+---
+
+## 산출물
+
+- 팀별 산출물: `outputs/{팀명}/` (로컬, Git 미포함)
+- 파일명: `YYYY-MM-DD_[유형]_[제목].md`

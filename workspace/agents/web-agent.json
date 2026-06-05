@@ -1,0 +1,8 @@
+{
+  "name": "Web Agent",
+  "version": "1.0-classroom",
+  "team": "it",
+  "keywords": ["[Web]", "[Landing]"],
+  "resolve_from": "workspace/context/product-registry.md",
+  "project_role": "web"
+}

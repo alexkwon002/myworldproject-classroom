@@ -1,0 +1,185 @@
+---
+alwaysApply: true
+---
+
+# PDCA Lifecycle Hooks & Workflow
+
+**최종 업데이트**: 2026-02-25
+**역할**: 모든 Agent의 작업 수명주기를 PDCA(Plan→Do→Check→Act) 사이클로 관리
+
+> bkit의 Hook 시스템을 Cursor Rules로 구현.
+> 이 규칙은 모든 채팅 세션에서 자동 적용됩니다.
+
+---
+
+## Lifecycle Hooks (5-Layer)
+
+### Hook 1: SessionStart — 새 채팅 세션 시작 시
+
+> **트리거**: 새 채팅창에서 첫 사용자 메시지 수신 시
+
+**Agent 필수 수행:**
+1. 시스템 날짜 확인 (`date` 또는 user_info 참조)
+2. `workspace/context/workspace-todo.md`의 **Active PDCA** 섹션만 확인 (`Read` offset/limit — **Completed·전체 파일 Read 금지**)
+3. 진행 중인 PDCA 사이클이 있으면 현재 Phase 상태 파악
+4. `workspace-history.md` **전체 Read 금지** — 과거 맥락 필요 시 `Grep`·`archive/history-YYYY-MM.md`만
+5. GitHub·clone·워크스페이스 관련 작업 예정 시 → `workspace/context/github-registry.md` 확인 (IT팀 SoT, 계정 추측 금지)
+
+### Hook 2: PreTask — 작업 시작 전
+
+> **트리거**: 사용자가 새로운 기능/수정/작업을 요청할 때
+
+**Agent 필수 수행:**
+1. **Plan Phase 진입** — 요구사항을 분석하고 작업 범위를 파악
+2. 크로스 프로젝트 영향 범위 사전 분석
+3. 복잡한 작업(3단계 이상)이면 `workspace-todo.md` Active PDCA에 등록
+4. 사용자에게 계획 확인 (임의 의사결정 금지)
+
+### Hook 3: DuringTask — 작업 수행 중
+
+> **트리거**: 코드 수정, 파일 생성 등 구현 작업 중
+
+**Agent 필수 수행:**
+1. **Do Phase** — 계획대로 구현, 진행 상태 추적
+2. 단계별 완료 시 체크 표시 업데이트
+3. 예상치 못한 이슈 발생 시 → 사용자에게 보고 후 계획 수정
+
+### Hook 4: PostTask — 작업 완료 시
+
+> **트리거**: 요청된 기능/수정이 완료되었을 때
+
+**Agent 필수 수행:**
+1. **Check Phase** — 검증 수행:
+   - 빌드/컴파일 에러 없음 확인
+   - Lint 에러 확인 (ReadLints)
+   - 기능 정상 작동 확인 (사용자 또는 자동 검증)
+2. **Act Phase** — 기록 및 다음 단계:
+   - `workspace-history.md`에 작업 이력 기록 (날짜+태그+**1~3문장** 요약, PII 마스킹)
+   - `workspace-todo.md` 상태 갱신 (In Progress→Completed)
+   - Gap 발견 시 → 신규 TODO 등록 (다음 PDCA 사이클)
+
+### Hook 5: PreCommit — 커밋/푸시 전
+
+> **트리거**: 사용자가 "커밋해", "푸시해" 요청 시
+
+**Agent 필수 수행:**
+1. `git status`로 변경 파일 확인
+2. `.env.*`, credential, secret 파일 포함 여부 확인 (보안)
+3. 변경사항 요약으로 커밋 메시지 작성
+4. 커밋 후 `git status`로 결과 확인
+
+---
+
+## PDCA Cycle 상세
+
+### Phase 1: Plan (계획)
+
+**목적**: 무엇을, 왜, 어떻게 할 것인지 명확히 정의
+
+| 항목 | 내용 |
+|---|---|
+| **요구사항 분석** | 사용자 요청을 기능 단위로 분해 |
+| **영향 범위 분석** | 변경이 미치는 프로젝트/파일/환경 파악 |
+| **작업 분해** | 복잡한 작업을 실행 가능한 단계로 분리 |
+| **리스크 식별** | 데이터 손실, Breaking Change, 보안 위험 사전 파악 |
+| **산출물** | workspace-todo.md Active PDCA에 계획 등록 |
+
+### Phase 2: Do (실행)
+
+**목적**: 계획대로 구현
+
+| 항목 | 내용 |
+|---|---|
+| **구현** | 코드 작성/수정, 설정 변경, 문서 작성 |
+| **진행 추적** | 단계별 완료 체크, 예상 vs 실제 비교 |
+| **이슈 관리** | 예상치 못한 문제 발생 시 즉시 보고 |
+| **산출물** | 코드 변경, 설정 파일, 마이그레이션 등 |
+
+### Phase 3: Check (검증)
+
+**목적**: 구현 결과가 계획에 부합하는지 검증
+
+| 항목 | 검증 방법 |
+|---|---|
+| **빌드 검증** | `next build`, `flutter analyze`, `npx prisma generate` |
+| **Lint 검증** | ReadLints 도구로 에디터 에러 확인 |
+| **기능 검증** | 구현된 기능이 요구사항과 일치하는지 확인 |
+| **보안 검증** | Secret 노출, SQL Injection, XSS 등 체크 |
+| **Gap 분석** | 계획 대비 누락/불일치 항목 식별 |
+| **산출물** | 검증 결과, Gap 목록 |
+
+### Phase 4: Act (조치)
+
+**목적**: 검증 결과를 반영하고 다음 사이클 준비
+
+| 항목 | 내용 |
+|---|---|
+| **Gap 해소** | Check에서 발견된 Gap 즉시 수정 (동일 세션) |
+| **이력 기록** | workspace-history.md에 작업 내용 기록 |
+| **TODO 갱신** | 완료→Completed, 신규 발견→Pending |
+| **다음 사이클** | 후속 작업이 필요하면 새로운 PDCA 사이클 등록 |
+| **산출물** | 업데이트된 history, todo, 다음 PDCA 계획 |
+
+---
+
+## PDCA 등록 형식 (workspace-todo.md)
+
+복잡한 작업(3단계 이상)은 Active PDCA 섹션에 아래 형식으로 등록:
+
+```
+### PDCA: [제목] — [프로덕트] (시작일)
+- **Phase**: Plan | Do | Check | Act
+- **목표**: 1줄 요약
+- **Plan**:
+  - [ ] 단계 1
+  - [ ] 단계 2
+- **Check 기준**:
+  - [ ] 빌드 에러 없음
+  - [ ] 기능 정상 작동
+  - [ ] lint 에러 없음
+- **Gap**:
+  - (Check 후 발견된 Gap 기록)
+```
+
+---
+
+## 자동 PDCA vs 수동 PDCA
+
+| 작업 유형 | PDCA 적용 | 설명 |
+|---|---|---|
+| 단순 작업 (1-2단계) | **자동** — Hook 규칙만 따름 | 색상 변경, 텍스트 수정, 아이콘 교체 등 |
+| 중간 작업 (3-5단계) | **간소화** — Plan+Do+Check, 별도 등록 불필요 | UI 화면 추가, API 엔드포인트 구현 등 |
+| 복잡한 작업 (6단계+) | **전체 PDCA** — Active PDCA에 등록하고 4단계 모두 수행 | Schema 변경, 멀티 프로젝트 배포, 신규 기능 개발 등 |
+
+---
+
+## Gap 분석 자동 반복 (Evaluator-Optimizer)
+
+Check Phase에서 Gap 발견 시:
+
+1. **Gap Score 90% 미만** → 자동으로 Act→Do→Check 반복 (최대 3회)
+2. **Gap Score 90% 이상** → Act Phase로 진행 (완료 처리)
+3. **3회 반복 후에도 미해결** → 사용자에게 보고하고 의사결정 요청
+
+Gap Score 계산: `(완료된 Check 항목 수 / 전체 Check 항목 수) × 100`
+
+---
+
+## 프로덕트별 Check 기준
+
+프로덕트별 상세 기준은 `workspace/context/product-registry.md`와 해당 프로덕트 레포의 문서를 따른다.
+
+### Web / API
+- 빌드 성공
+- TypeScript/테스트 통과
+- 환경변수 실값 미노출
+
+### Mobile
+- 정적 분석 통과
+- 주요 화면 수동 검증
+- iOS/Android 빌드 가능성 확인
+
+### Database
+- migration 기반 변경
+- 백업/롤백 계획 확인
+- DEV/PRD 적용은 사용자 확인 후 진행

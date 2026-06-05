@@ -1,0 +1,43 @@
+---
+alwaysApply: true
+---
+
+# Instructor Local Overlay (gitignore — 본인만 보유)
+
+> `cp instructor.local.mdc.example instructor.local.mdc` 후 본인 프로젝트로 수정.
+> `npm run setup:instructor` 로 프로필 전환.
+
+---
+
+## 컨텍스트 경로 (instructor 전용)
+
+| 항목 | 경로 |
+|---|---|
+| history / todo / registry | `workspace/local/context/` |
+| 산출물 | `workspace/local/outputs/` (또는 `outputs/`) |
+| 멀티루트 | `myworldproject.code-workspace` (gitignore) |
+
+---
+
+## 본인 프로덕트 (예시 — 실제 내용으로 교체)
+
+### Product 1: (이름)
+- infra: (GCP / Vercel / ...)
+- github: (owner)
+- projects: (registry와 동기화)
+
+---
+
+## GitHub / 클라우드 계정 (본인만)
+
+| 용도 | gh_login / 계정 |
+|---|---|
+| 프로덕트 A | _your-gh-user_ |
+
+**Agent 금지**: 이 파일 없는 환경에서 위 계정을 추측 사용.
+
+---
+
+## 배포 순서 (프로덕트별 — 본인 정의)
+
+_(예: Schema 변경 시 API → Admin → DEV → PRD)_

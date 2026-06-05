@@ -1,0 +1,15 @@
+{
+  "name": "myworldproject",
+  "version": "2.0.0",
+  "description": "MyWorldProject HQ — 멀티 프로덕트 통합 AI 오케스트레이션 (Multi-Product Integrated AI Orchestration)",
+  "private": true,
+  "scripts": {
+    "setup:classroom": "bash scripts/setup-classroom.sh",
+    "setup:instructor": "bash scripts/setup-instructor.sh",
+    "archive:context": "bash scripts/archive-workspace-context.sh",
+    "security:install-hooks": "bash scripts/security/install-hooks.sh",
+    "notify:slack": "node scripts/notify.js slack",
+    "notify:telegram": "node scripts/notify.js telegram",
+    "notify:all": "node scripts/notify.js all"
+  }
+}

@@ -1,0 +1,73 @@
+# MyWorldProject HQ — 조직 / 스킬 / 룰 / workspace 프레임워크
+# gcloud · firebase · 배포 CLI는 각 프로덕트 레포 cwd에서 실행
+
+# Dependencies
+node_modules/
+
+# Environment & Secrets
+.env
+.env.local
+.env.*
+!.env.example
+
+# Private Keys & Certificates
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+
+# Service Account & Credentials
+service-account*.json
+credentials*.json
+firebase-adminsdk*.json
+*-service-key.json
+google-credentials*.json
+
+# Backup & SQL Dumps
+*.sql
+*.sql.backup
+*.dump
+backup/
+backups/
+temp/
+
+# OS & IDE
+.DS_Store
+Thumbs.db
+*.log
+*.swp
+*.swo
+*~
+
+# Build artifacts
+dist/
+build/
+.next/
+
+# HQ 대외비
+docs/
+confidential/
+
+# ── 프로필 · Instructor 전용 (GitHub 미포함) ──
+workspace/.profile
+workspace/local/
+.cursor/rules/instructor.local.mdc
+myworldproject.code-workspace
+
+# ── Runtime 산출물 (학생·강사 각자 로컬) ──
+outputs/**/*
+!outputs/
+!outputs/*/
+!outputs/**/README.md
+
+# workspace/context — archive 본문은 로컬 전용 (README만 커밋)
+workspace/context/archive/history-*.md
+workspace/context/archive/workspace-todo-completed.md
+
+# CLI spillover (멀티워크스페이스 cwd 오류 방지)
+.gcloud-tmp/
+.firebase/
+firepit-log.txt
+.git.corrupted.bak*/
