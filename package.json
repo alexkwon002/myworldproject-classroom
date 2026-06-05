@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "setup:classroom": "bash scripts/setup-classroom.sh",
-    "setup:instructor": "bash scripts/setup-instructor.sh",
     "archive:context": "bash scripts/archive-workspace-context.sh",
     "security:install-hooks": "bash scripts/security/install-hooks.sh",
     "notify:slack": "node scripts/notify.js slack",

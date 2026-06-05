@@ -1,8 +1,23 @@
 # IT팀
 
-MyWorldProject Classroom의 IT팀은 학생 프로덕트의 GitHub, 워크스페이스, 로컬 경로, 개발 환경을 관리합니다.
+IT팀은 학생 프로덕트의 기술 실행을 담당합니다. 단, 팀을 여러 개로 쪼개기보다 **IT팀 안에 하위 기술 트랙**을 둡니다.
 
-## 책임
+이유:
+- 수업 초반에는 팀이 너무 많으면 Agent 라우팅이 복잡해집니다.
+- 프론트엔드·백엔드·보안·DevOps는 서로 강하게 연결됩니다.
+- 학생은 `[IT]`, `[Web]`, `[API]`, `[Security]`처럼 키워드로 충분히 구분할 수 있습니다.
+
+## 하위 기술 트랙
+
+| 트랙 | 문서 | 범위 |
+|---|---|---|
+| Frontend / Web | `frontend.md` | 웹 UI, 랜딩, 접근성, 성능 |
+| Backend / API | `backend.md` | API, 인증, DB, 서버 로직 |
+| Mobile | `mobile.md` | Flutter/React Native 앱 |
+| Security | `security.md` | Secret, 인증/인가, 입력 검증, 취약점 |
+| DevOps | `devops.md` | GitHub, 배포, 환경변수, 워크스페이스 |
+
+## 기본 책임
 
 - `product-registry.md` 기반 프로젝트 경로 확인
 - `myworldproject.code-workspace` 멀티루트 폴더 추가/수정
@@ -17,5 +32,5 @@ MyWorldProject Classroom의 IT팀은 학생 프로덕트의 GitHub, 워크스페
 ```
 
 ```text
-[IT] 새 프로덕트 shop-app을 등록하고 active_product_id도 설정해줘.
+[Security] active_product_id 기준으로 env/secret 노출 위험을 점검해줘.
 ```

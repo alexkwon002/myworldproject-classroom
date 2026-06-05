@@ -8,19 +8,18 @@ alwaysApply: true
 **최종 업데이트**: 2026-06-05  
 **역할**: 13팀·스킬·PDCA로 프로덕트 N개를 동시 운영하는 AI 오케스트레이션 프레임워크
 
-> **프로덕트·레포·계정·배포 상세**는 `workspace/context/product-registry.md`(또는 instructor 시 `workspace/local/context/`)가 SoT.
+> **프로덕트·레포·계정·배포 상세**는 `workspace/context/product-registry.md`가 SoT.
 > **수업/온보딩 Agent 지시**: `.cursor/rules/classroom.mdc` · 루트 `AGENTS.md`
 
 ---
 
 ## CRITICAL — 작업 이력 기록
 
-### 컨텍스트 경로 (프로필별)
+### 컨텍스트 경로
 
-| 프로필 | history / todo / registry |
+| 항목 | 경로 |
 |---|---|
-| `classroom` | `workspace/context/` |
-| `instructor` | `workspace/local/context/` (우선) |
+| history / todo / registry | `workspace/context/` |
 
 ### 기록 시점
 1. 작업 완료 직후
@@ -144,10 +143,10 @@ Agent 필수:
 | 항목 | 경로 |
 |---|---|
 | 팀 산출물 | `outputs/{팀명}/` (로컬) |
-| TODO | `{context_root}/workspace-todo.md` |
-| History | `{context_root}/workspace-history.md` |
-| Registry | `{context_root}/product-registry.md` |
-| GitHub SoT | `{context_root}/github-registry.md` |
+| TODO | `workspace/context/workspace-todo.md` |
+| History | `workspace/context/workspace-history.md` |
+| Registry | `workspace/context/product-registry.md` |
+| GitHub SoT | `workspace/context/github-registry.md` |
 
 ---
 
@@ -156,5 +155,4 @@ Agent 필수:
 ```bash
 npm install
 npm run setup:classroom    # 학생·첫 clone
-npm run setup:instructor   # 강사 (workspace/local/ 오버레이)
 ```

@@ -50,10 +50,9 @@ build/
 docs/
 confidential/
 
-# ── 프로필 · Instructor 전용 (GitHub 미포함) ──
+# ── 로컬 런타임 (GitHub 미포함) ──
 workspace/.profile
 workspace/local/
-.cursor/rules/instructor.local.mdc
 myworldproject.code-workspace
 
 # ── Runtime 산출물 (학생·강사 각자 로컬) ──
